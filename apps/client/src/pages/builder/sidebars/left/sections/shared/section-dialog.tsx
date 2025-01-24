@@ -165,7 +165,6 @@ export const SectionDialog = <T extends SectionItem>({
                     </h2>
                   </div>
                 </DialogTitle>
-                
                 <VisuallyHidden>
                   <DialogDescription />
                 </VisuallyHidden>
