@@ -1,13 +1,14 @@
-import { cn } from "@reactive-resume/utils";
+import { forwardRef } from "react";
 
 type BrandIconProps = {
   slug: string;
 };
 
-export const BrandIcon = ({ slug }: BrandIconProps) => {
+export const BrandIcon = forwardRef<HTMLImageElement, BrandIconProps>(({ slug }, ref) => {
   if (slug === "linkedin") {
     return (
       <img
+        ref={ref}
         alt="LinkedIn"
         className="size-4"
         src={`${window.location.origin}/support-logos/linkedin.svg`}
@@ -15,5 +16,9 @@ export const BrandIcon = ({ slug }: BrandIconProps) => {
     );
   }
 
-  return <i className={cn("si si--color text-[1rem]", `si-${slug}`)} />;
-};
+  return (
+    <img ref={ref} alt={slug} className="size-4" src={`https://cdn.simpleicons.org/${slug}`} />
+  );
+});
+
+BrandIcon.displayName = "BrandIcon";

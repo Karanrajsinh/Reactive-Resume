@@ -1,10 +1,8 @@
-import {
+import type {
   Award,
   Certification,
   CustomSection,
   CustomSectionGroup,
-  Education,
-  Experience,
   Interest,
   Language,
   Project,
@@ -14,8 +12,8 @@ import {
   SectionWithItem,
   Skill,
   URL,
-  Volunteer,
 } from "@reactive-resume/schema";
+import { Education, Experience, Volunteer } from "@reactive-resume/schema";
 import { cn, hexToRgb, isEmptyString, isUrl } from "@reactive-resume/utils";
 import get from "lodash.get";
 import React, { Fragment } from "react";
@@ -23,7 +21,7 @@ import React, { Fragment } from "react";
 import { BrandIcon } from "../components/brand-icon";
 import { Picture } from "../components/picture";
 import { useArtboardStore } from "../store/artboard";
-import { TemplateProps } from "../types/template";
+import type { TemplateProps } from "../types/template";
 
 const Header = () => {
   const basics = useArtboardStore((state) => state.resume.basics);
@@ -519,13 +517,13 @@ export const Leafish = ({ columns, isFirstPage = false }: TemplateProps) => {
       {isFirstPage && <Header />}
 
       <div className="p-custom grid grid-cols-2 items-start space-x-6">
-        <div className="grid gap-y-4">
+        <div className={cn("grid gap-y-4", sidebar.length === 0 && "col-span-2")}>
           {main.map((section) => (
             <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>
           ))}
         </div>
 
-        <div className="grid gap-y-4">
+        <div className={cn("grid gap-y-4", sidebar.length === 0 && "hidden")}>
           {sidebar.map((section) => (
             <Fragment key={section}>{mapSectionToComponent(section)}</Fragment>
           ))}

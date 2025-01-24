@@ -1,6 +1,7 @@
 import { idSchema } from "@reactive-resume/schema";
+import { dateSchema } from "@reactive-resume/utils";
 import { createZodDto } from "nestjs-zod/dto";
-import { z } from "nestjs-zod/z";
+import { z } from "zod";
 
 import { secretsSchema } from "../secrets";
 
@@ -25,9 +26,9 @@ export const userSchema = z.object({
   locale: z.string().default("en-US"),
   emailVerified: z.boolean().default(false),
   twoFactorEnabled: z.boolean().default(false),
-  provider: z.enum(["email", "github", "google"]).default("email"),
-  createdAt: z.date().or(z.dateString()),
-  updatedAt: z.date().or(z.dateString()),
+  provider: z.enum(["email", "github", "google", "openid"]).default("email"),
+  createdAt: dateSchema,
+  updatedAt: dateSchema,
 });
 
 export class UserDto extends createZodDto(userSchema) {}

@@ -1,14 +1,15 @@
 /* eslint-disable lingui/no-unlocalized-strings */
 
 import { t } from "@lingui/macro";
-import { Button, Combobox, ComboboxOption, Label, Slider, Switch } from "@reactive-resume/ui";
+import type { ComboboxOption } from "@reactive-resume/ui";
+import { Button, Combobox, Label, Slider, Switch } from "@reactive-resume/ui";
 import { cn, fonts } from "@reactive-resume/utils";
 import { useCallback, useEffect, useState } from "react";
 import webfontloader from "webfontloader";
 
 import { useResumeStore } from "@/client/stores/resume";
 
-import { getSectionIcon } from "../shared/section-icon";
+import { SectionIcon } from "../shared/section-icon";
 
 const fontSuggestions = [
   "Open Sans",
@@ -61,12 +62,12 @@ export const TypographySection = () => {
     <section id="typography" className="grid gap-y-8">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
-          {getSectionIcon("typography")}
-          <h2 className="line-clamp-1 text-2xl  font-bold lg:text-3xl">{t`Typography`}</h2>
+          <SectionIcon id="typography" size={18} name={t`Typography`} />
+          <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{t`Typography`}</h2>
         </div>
       </header>
 
-      <main className="grid gap-y-8">
+      <main className="grid gap-y-6">
         <div className="grid grid-cols-2 gap-4">
           {fontSuggestions.map((font) => (
             <Button
@@ -167,7 +168,7 @@ export const TypographySection = () => {
         <div className="space-y-1.5">
           <Label>{t`Options`}</Label>
 
-          <div className="flex items-center gap-x-4 py-2">
+          <div className="flex items-center gap-x-4 py-1">
             <Switch
               id="metadata.typography.hideIcons"
               checked={typography.hideIcons}
@@ -178,7 +179,7 @@ export const TypographySection = () => {
             <Label htmlFor="metadata.typography.hideIcons">{t`Hide Icons`}</Label>
           </div>
 
-          <div className="flex items-center gap-x-4 py-2">
+          <div className="flex items-center gap-x-4 py-1">
             <Switch
               id="metadata.typography.underlineLinks"
               checked={typography.underlineLinks}

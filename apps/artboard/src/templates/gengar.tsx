@@ -1,10 +1,8 @@
-import {
+import type {
   Award,
   Certification,
   CustomSection,
   CustomSectionGroup,
-  Education,
-  Experience,
   Interest,
   Language,
   Profile,
@@ -15,8 +13,8 @@ import {
   SectionWithItem,
   Skill,
   URL,
-  Volunteer,
 } from "@reactive-resume/schema";
+import { Education, Experience, Volunteer } from "@reactive-resume/schema";
 import { cn, hexToRgb, isEmptyString, isUrl } from "@reactive-resume/utils";
 import get from "lodash.get";
 import { Fragment } from "react";
@@ -24,7 +22,7 @@ import { Fragment } from "react";
 import { BrandIcon } from "../components/brand-icon";
 import { Picture } from "../components/picture";
 import { useArtboardStore } from "../store/artboard";
-import { TemplateProps } from "../types/template";
+import type { TemplateProps } from "../types/template";
 
 const Header = () => {
   const basics = useArtboardStore((state) => state.resume.basics);
@@ -83,17 +81,20 @@ const Header = () => {
 
 const Summary = () => {
   const section = useArtboardStore((state) => state.resume.sections.summary);
+  const primaryColor = useArtboardStore((state) => state.resume.metadata.theme.primary);
 
   if (!section.visible || isEmptyString(section.content)) return null;
 
   return (
-    <section id={section.id}>
-      <div
-        dangerouslySetInnerHTML={{ __html: section.content }}
-        className="wysiwyg"
-        style={{ columns: section.columns }}
-      />
-    </section>
+    <div className="p-custom space-y-4" style={{ backgroundColor: hexToRgb(primaryColor, 0.2) }}>
+      <section id={section.id}>
+        <div
+          dangerouslySetInnerHTML={{ __html: section.content }}
+          className="wysiwyg"
+          style={{ columns: section.columns }}
+        />
+      </section>
+    </div>
   );
 };
 
@@ -587,15 +588,8 @@ export const Gengar = ({ columns, isFirstPage = false }: TemplateProps) => {
         </div>
       </div>
 
-      <div className="main group col-span-2">
-        {isFirstPage && (
-          <div
-            className="p-custom space-y-4"
-            style={{ backgroundColor: hexToRgb(primaryColor, 0.2) }}
-          >
-            <Summary />
-          </div>
-        )}
+      <div className={cn("main group", sidebar.length > 0 ? "col-span-2" : "col-span-3")}>
+        {isFirstPage && <Summary />}
 
         <div className="p-custom space-y-4">
           {main.map((section) => (

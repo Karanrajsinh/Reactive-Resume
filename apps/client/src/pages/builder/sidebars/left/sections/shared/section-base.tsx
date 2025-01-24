@@ -1,7 +1,7 @@
+import type { DragEndEvent } from "@dnd-kit/core";
 import {
   closestCenter,
   DndContext,
-  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -16,7 +16,7 @@ import {
 } from "@dnd-kit/sortable";
 import { t } from "@lingui/macro";
 import { Plus } from "@phosphor-icons/react";
-import { SectionItem, SectionKey, SectionWithItem } from "@reactive-resume/schema";
+import type { SectionItem, SectionKey, SectionWithItem } from "@reactive-resume/schema";
 import { Button } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,7 +25,7 @@ import get from "lodash.get";
 import { useDialog } from "@/client/stores/dialog";
 import { useResumeStore } from "@/client/stores/resume";
 
-import { getSectionIcon } from "./section-icon";
+import { SectionIcon } from "./section-icon";
 import { SectionListItem } from "./section-list-item";
 import { SectionOptions } from "./section-options";
 
@@ -98,9 +98,8 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
     >
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
-          {getSectionIcon(id)}
-
-          <h2 className="line-clamp-1  text-2xl font-bold lg:text-3xl">{section.name}</h2>
+          <SectionIcon id={id} size={18} />
+          <h2 className="line-clamp-1 text-2xl font-bold lg:text-3xl">{section.name}</h2>
         </div>
 
         <div className="flex items-center gap-x-2">
